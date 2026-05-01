@@ -1,7 +1,9 @@
+# input_handler.py
+
 class InputHandler:
     @staticmethod
     def get_grid_params():
-        """Collect grid parameters from console input"""
+        """Collect grid parameters from console input including number of cars"""
         print("***************************************")
         print("*        SMART PARKING SYSTEM         *")
         print("***************************************\n")
@@ -49,11 +51,21 @@ class InputHandler:
                 break
             print("Percentage must be between 0 and 80.")
 
+        # Number of cars (ADD THIS SECTION)
+        print("\nMaximum 10 cars can enter at once.")
+        while True:
+            cars_input = input("Enter number of cars entering: ")
+            if cars_input.isdigit() and 1 <= int(cars_input) <= 10:
+                num_cars = int(cars_input)
+                break
+            print("Number of cars must be between 1 and 10.")
+
         return {
             'rows': rows,
             'cols': cols,
             'gate': (gate_row, gate_col),
-            'occupancy': occ
+            'occupancy': occ,
+            'num_cars': num_cars   # Added
         }
 
     @staticmethod
@@ -61,7 +73,7 @@ class InputHandler:
         """Validate grid parameters"""
         rows = params.get('rows', 0)
         cols = params.get('cols', 0)
-        gate = params.get('gate', (0,0))
+        gate = params.get('gate', (0, 0))
         occ = params.get('occupancy', 0)
 
         if rows < 3 or rows > 15:
